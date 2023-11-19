@@ -189,8 +189,8 @@ download() {
 
 # get server ip
 get_ip() {
-    export "$(_wget -4 -qO- https://one.one.one.one/cdn-cgi/trace | grep ip=)" &>/dev/null
-    [[ -z $ip ]] && export "$(_wget -6 -qO- https://one.one.one.one/cdn-cgi/trace | grep ip=)" &>/dev/null
+    ip=$(ip -o -4 addr show eth0 | awk '{print $4}' | cut -d/ -f1)
+    export ip
 }
 
 # check background tasks status
