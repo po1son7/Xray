@@ -125,8 +125,8 @@ get_uuid() {
 
 get_ip() {
     [[ $ip || $is_no_auto_tls || $is_gen ]] && return
-    export "$(_wget -4 -qO- https://one.one.one.one/cdn-cgi/trace | grep ip=)" &>/dev/null
-    [[ ! $ip ]] && export "$(_wget -6 -qO- https://one.one.one.one/cdn-cgi/trace | grep ip=)" &>/dev/null
+    ip=$(ip -o -4 addr show eth0 | awk '{print $4}' | cut -d/ -f1)
+    export ip
     [[ ! $ip ]] && {
         err "获取服务器 IP 失败.."
     }
